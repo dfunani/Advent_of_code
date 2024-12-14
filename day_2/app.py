@@ -6,14 +6,14 @@ def is_report_safe(report):
     differences = [report[i + 1] - report[i] for i in range(len(report) - 1)]
 
     # Check if all differences are within the range [1, 3] or [-3, -1]
-    if not all(1 <= diff <= 3 or -3 <= diff <= -1 for diff in differences):
+    if not all(1 <= abs(diff) <= 3 for diff in differences):
         return False
 
     # Check if the report is monotonic (either all increasing or all decreasing)
-    is_increasing = all(diff > 0 for diff in differences)
-    is_decreasing = all(diff < 0 for diff in differences)
+    is_all_increasing = all(diff > 0 for diff in differences)
+    is_all_decreasing = all(diff < 0 for diff in differences)
 
-    return is_increasing or is_decreasing
+    return is_all_increasing or is_all_decreasing
 
 
 def count_safe_reports(reports):
